@@ -1,0 +1,4 @@
+apps:
+  - name: edhoc-rs-basic
+    selects:
+      - ?release

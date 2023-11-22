@@ -1,0 +1,22 @@
+[package]
+name = "edhoc-rs-basic"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+publish = false
+
+[dependencies]
+riot-rs = { path = "../../src/riot-rs" }
+riot-rs-boards = { path = "../../src/riot-rs-boards" }
+riot-wrappers = { workspace = true, optional = true }
+
+hexlit = "0.5.3"
+edhoc-rs = { path = "../../../edhoc-rs-FORK/lib", default-features = false }
+edhoc-crypto = { path = "../../../edhoc-rs-FORK/crypto", default-features = false }
+
+[features]
+default = [ "crypto-cryptocell310", "ead-none" ]
+# crypto-psa = [ "edhoc-crypto/psa-baremetal" ] # not working
+crypto-cryptocell310 = [ "edhoc-crypto/cryptocell310" ]
+ead-none = [ "edhoc-rs/ead-none" ]
+ead-zeroconf = [ "edhoc-rs/ead-zeroconf" ]

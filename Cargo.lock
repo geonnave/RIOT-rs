@@ -146,6 +146,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "bindgen"
+version = "0.69.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9ffcebc3849946a7170a05992aac39da343a90676ab392c51a4280981d6379c2"
+dependencies = [
+ "bitflags 2.4.1",
+ "cexpr",
+ "clang-sys",
+ "lazy_static",
+ "lazycell",
+ "log",
+ "peeking_take_while",
+ "prettyplease",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "rustc-hash",
+ "shlex 1.2.0",
+ "syn 2.0.39",
+ "which",
+]
+
+[[package]]
 name = "bit-set"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -635,6 +658,69 @@ dependencies = [
 ]
 
 [[package]]
+name = "edhoc-consts"
+version = "0.4.0-alpha.1"
+
+[[package]]
+name = "edhoc-crypto"
+version = "0.4.0-alpha.1"
+dependencies = [
+ "edhoc-consts",
+ "edhoc-crypto-cryptocell310",
+]
+
+[[package]]
+name = "edhoc-crypto-cryptocell310"
+version = "0.4.0-alpha.1"
+dependencies = [
+ "bindgen 0.69.1",
+ "edhoc-consts",
+]
+
+[[package]]
+name = "edhoc-ead"
+version = "0.4.0-alpha.1"
+dependencies = [
+ "edhoc-consts",
+ "edhoc-ead-none",
+ "edhoc-ead-zeroconf",
+]
+
+[[package]]
+name = "edhoc-ead-none"
+version = "0.4.0-alpha.1"
+dependencies = [
+ "edhoc-consts",
+]
+
+[[package]]
+name = "edhoc-ead-zeroconf"
+version = "0.4.0-alpha.1"
+dependencies = [
+ "edhoc-consts",
+]
+
+[[package]]
+name = "edhoc-rs"
+version = "0.4.0-alpha.1"
+dependencies = [
+ "edhoc-consts",
+ "edhoc-ead",
+]
+
+[[package]]
+name = "edhoc-rs-basic"
+version = "0.1.0"
+dependencies = [
+ "edhoc-crypto",
+ "edhoc-rs",
+ "hexlit",
+ "riot-rs",
+ "riot-rs-boards",
+ "riot-wrappers",
+]
+
+[[package]]
 name = "either"
 version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -682,17 +768,6 @@ dependencies = [
 name = "embassy-futures"
 version = "0.1.1"
 source = "git+https://github.com/embassy-rs/embassy#006260feddf4d362a99260a38d86dffddab39d2e"
-
-[[package]]
-name = "embassy-gpio"
-version = "0.1.0"
-dependencies = [
- "embassy-executor",
- "embassy-sync 0.3.0",
- "embassy-time",
- "riot-rs",
- "riot-rs-boards",
-]
 
 [[package]]
 name = "embassy-hal-internal"
@@ -1253,6 +1328,12 @@ name = "hex"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
+
+[[package]]
+name = "hexlit"
+version = "0.5.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5b6e75c860d4216ac53f9ac88b25c99eaedba075b3a7b2ed31f2adc51a74fffd"
 
 [[package]]
 name = "home"
@@ -1882,6 +1963,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "925383efa346730478fb4838dbe9137d2a47675ad789c546d150a6e1dd4ab31c"
 
 [[package]]
+name = "prettyplease"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ae005bd773ab59b4725093fd7df83fd7892f7d8eafb48dbd7de6e024e4215f9d"
+dependencies = [
+ "proc-macro2",
+ "syn 2.0.39",
+]
+
+[[package]]
 name = "proc-macro-error"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2125,13 +2216,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "riot-rs-linkme"
-version = "0.1.0"
-dependencies = [
- "linkme",
-]
-
-[[package]]
 name = "riot-rs-rt"
 version = "0.1.0"
 dependencies = [
@@ -2175,7 +2259,7 @@ name = "riot-sys"
 version = "0.7.9"
 source = "git+https://github.com/kaspar030/rust-riot-sys?branch=update_riot_rs_support#b4bd4bde7520d0ffd79b89c2c5454f74de29dc39"
 dependencies = [
- "bindgen",
+ "bindgen 0.64.0",
  "c2rust-asm-casts",
  "c2rust-bitfields",
  "cty",
