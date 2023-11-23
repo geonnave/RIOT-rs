@@ -28,6 +28,51 @@ fn riot_main() {
         riot_rs::buildinfo::BOARD
     );
 
+    fn test_new_initiator() {
+        let state = Default::default();
+        let _initiator = EdhocInitiator::new(
+            state,
+            edhoc_crypto::default_crypto(),
+            I,
+            CRED_I,
+            Some(CRED_R),
+        );
+    }
+
+    test_new_initiator();
+    println!("Test test_new_initiator passed.");
+
+    fn test_p256_keys() {
+        let (x, g_x) = edhoc_crypto::default_crypto().p256_generate_key_pair();
+        let (y, g_y) = edhoc_crypto::default_crypto().p256_generate_key_pair();
+
+        let g_xy = edhoc_crypto::default_crypto().p256_ecdh(&x, &g_y);
+        let g_yx = edhoc_crypto::default_crypto().p256_ecdh(&y, &g_x);
+
+        assert_eq!(g_xy, g_yx);
+    }
+    test_p256_keys();
+    println!("Test test_p256_keys passed.");
+
+    fn test_prepare_message_1() {
+        let state = Default::default();
+        let mut initiator = EdhocInitiator::new(
+            state,
+            edhoc_crypto::default_crypto(),
+            I,
+            CRED_I,
+            Some(CRED_R),
+        );
+
+        let c_i: u8 =
+            generate_connection_identifier_cbor(&mut edhoc_crypto::default_crypto()).into();
+        let message_1 = initiator.prepare_message_1(c_i);
+        assert!(message_1.is_ok());
+    }
+
+    test_prepare_message_1();
+    println!("Test test_prepare_message_1 passed.");
+
     fn test_handshake() {
         let state_initiator = Default::default();
         let initiator = EdhocInitiator::new(

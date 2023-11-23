@@ -2,3 +2,8 @@ apps:
   - name: edhoc-rs-basic
     selects:
       - ?release
+    env:
+      global:
+        CFLAGS:
+          - -DTHREAD_STACKSIZE_MAIN=50000
+          - -DTHREAD_STACKSIZE_DEFAULT=50000
